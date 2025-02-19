@@ -1,0 +1,40 @@
+body {
+	padding: 30px 0 0 50px;
+}
+button {
+	display: block;
+	cursor: pointer;
+	padding: 5px 40px;
+	margin: 30px auto;
+}
+input {
+	display: block;
+	margin: 10px auto;
+}
+h2 {
+	margin: 10px auto 30px;
+	text-align: center;
+}
+
+.table {
+	margin: 30px 10px;
+	width: 1000px;
+}
+
+.table,
+.table th,
+.table td {
+	border: 1px solid black;
+}
+
+table td {
+	padding: 0 10px;
+}
+
+table button {
+	margin: 5px auto;
+}
+
+td img {
+	width: 50px;
+}
