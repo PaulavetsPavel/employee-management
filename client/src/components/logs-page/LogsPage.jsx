@@ -31,8 +31,9 @@ const LogsPage = () => {
 			<table className='table'>
 				<thead>
 					<tr>
-						<th>Id пользователя</th>
+						<th>ID пользователя</th>
 						<th>Action</th>
+						<th>Time</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -43,7 +44,7 @@ const LogsPage = () => {
 							</tr>
 						))
 					) : (
-						<>Нет данный о работниках</>
+						<>Нет данный о логах</>
 					)}
 				</tbody>
 			</table>

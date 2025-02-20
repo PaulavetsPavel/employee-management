@@ -37,13 +37,14 @@ class EmployeeController {
 	async createEmployee(req, res, next) {
 		try {
 			const { name, position, hire_date, salary, photo_url } = req.body
-
+			const created_by = req.user.id
 			const employeeData = await employeeService.addEmployeeToDB(
 				name,
 				position,
 				hire_date,
 				salary,
-				photo_url
+				photo_url,
+				created_by
 			)
 
 			// Логирование

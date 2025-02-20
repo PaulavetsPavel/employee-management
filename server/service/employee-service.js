@@ -33,9 +33,16 @@ class EmployeeService {
 		return employees
 	}
 
-	async addEmployeeToDB(name, position, hire_date, salary, photo_url) {
+	async addEmployeeToDB(
+		name,
+		position,
+		hire_date,
+		salary,
+		photo_url,
+		created_by
+	) {
 		const lastRow = await pool.query(
-			`INSERT INTO employees (name , position , hire_date, salary, photo_url ) VALUES ('${name}', '${position}', '${hire_date}', '${salary}', '${photo_url}') `
+			`INSERT INTO employees (name , position , hire_date, salary, photo_url, created_by  ) VALUES ('${name}', '${position}', '${hire_date}', '${salary}', '${photo_url}','${created_by}') `
 		)
 		// получение последнего добавленного пользователя из бд
 		const [addedEmployee] = await pool.query(
