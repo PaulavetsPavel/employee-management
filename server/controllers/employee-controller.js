@@ -2,7 +2,7 @@ import employeeService from '../service/employee-service.js'
 import logAction from '../utils/logger.js'
 
 class EmployeeController {
-	async getEmployees(req, res, next) {
+	async getEmployees(req, res) {
 		try {
 			const { page = 2, limit = 10, search, sortBy } = req.query
 			const offset = (page - 1) * limit
@@ -18,23 +18,23 @@ class EmployeeController {
 			userData = await employeeService.getAllEmployees()
 
 			return res.json(userData)
-		} catch (err) {
-			next(err)
+		} catch (e) {
+			return res.status(500).json(e.messagee)
 		}
 	}
-	async getEmployee(req, res, next) {
+	async getEmployee(req, res) {
 		try {
 			const id = req.params.id
 
 			const userData = await employeeService.getEmployeeById(id)
 
 			return res.json(userData)
-		} catch (err) {
-			next(err)
+		} catch (e) {
+			return res.status(500).json(e.messagee)
 		}
 	}
 
-	async createEmployee(req, res, next) {
+	async createEmployee(req, res) {
 		try {
 			const { name, position, hire_date, salary, photo_url } = req.body
 			const created_by = req.user.id
@@ -54,7 +54,7 @@ class EmployeeController {
 			)
 			return res.json(employeeData)
 		} catch (err) {
-			next(err)
+			return res.status(500).json(e.messagee)
 		}
 	}
 	async updateEmployee(req, res, next) {
@@ -74,11 +74,11 @@ class EmployeeController {
 			//Логирование
 			await logAction(req.user.id, `Updated employee with ID ${id}`)
 			return res.json(employeeData)
-		} catch (err) {
-			next(err)
+		} catch (e) {
+			return res.status(500).json(e.messagee)
 		}
 	}
-	async deleteEmployee(req, res, next) {
+	async deleteEmployee(req, res) {
 		try {
 			const id = req.params.id
 
@@ -87,7 +87,7 @@ class EmployeeController {
 			await logAction(req.user.id, `Deleted employee with ID ${id}`)
 			return res.json(employeeData)
 		} catch (err) {
-			next(err)
+			return res.status(500).json(e.messagee)
 		}
 	}
 }

@@ -37,7 +37,8 @@ export default class Store {
 			this.setUser(response.data.user)
 			return response
 		} catch (e) {
-			console.log(e.response?.data?.message)
+			
+			return e.response
 		}
 	}
 
@@ -49,7 +50,7 @@ export default class Store {
 
 			return response
 		} catch (e) {
-			console.log(e.response?.data?.message)
+			return e.response
 		}
 	}
 
@@ -60,7 +61,7 @@ export default class Store {
 			this.setAuth(false)
 			this.setUser({})
 		} catch (e) {
-			console.log(e.response?.data?.message)
+			console.log(e.response)
 		}
 	}
 

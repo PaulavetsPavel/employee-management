@@ -2,7 +2,7 @@ import { pool } from "../config/db.js";
 import bcrypt from "bcrypt";
 import tokenService from "./token-service.js";
 import UserDto from "../dtos/user-dto.js";
-import ApiErrors from "../exeptions/api-error.js";
+
 
 class UserService {
   async registration(email, password) {
@@ -13,7 +13,7 @@ class UserService {
 
     // проверка существует ли пользователь в бд
     if (candidate[0]) {
-      throw ApiErrors.BadRequest("User already exists.");
+      throw new Error("User already exists.");
     }
 
     const hashPassword = await bcrypt.hash(password, 3);
@@ -45,12 +45,13 @@ class UserService {
     ]);
 
     if (!user[0]) {
-      throw ApiErrors.BadRequest("User with this email is not found");
+      throw new Error("User with this email is not found");
+      
     }
     const isPassEqual = await bcrypt.compare(password, user[0].password_hash);
 
     if (!isPassEqual) {
-      throw ApiErrors.BadRequest("Invalid password");
+      throw new Error("Invalid password");
     }
 
     const userDto = new UserDto(user[0].id, user[0].email, user[0].role);
@@ -66,16 +67,17 @@ class UserService {
 
     return token;
   }
+  
   async refresh(refreshToken) {
     if (!refreshToken) {
-      throw ApiErrors.UnauthorizedError();
+      throw new Error("User is't authirized");
     }
 
     const userData = tokenService.validateRefreshToken(refreshToken);
     const tokenFromDB = await tokenService.findToken(refreshToken);
 
     if (!userData || !tokenFromDB) {
-      throw ApiErrors.UnauthorizedError();
+      throw new Error("User is't authirized");
     }
 
     const [user] = await pool.query("SELECT * FROM users WHERE id = ?", [
@@ -88,6 +90,7 @@ class UserService {
 
     return { ...tokens, user: { ...userDto } };
   }
+
   async getAllUsers() {
     const [users] = await pool.query("SELECT * FROM users ");
     return users;

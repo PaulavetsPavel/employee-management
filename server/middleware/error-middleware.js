@@ -1,9 +1,9 @@
-import ApiError from "../exeptions/api-error.js";
+
 
 export default function (err, req, res, next) {
   console.log(err);
 
-  if (err instanceof ApiError) {
+  if (err instanceof Error) {
     return res
       .status(err.status)
       .json({ message: err.message, errors: err.errors });

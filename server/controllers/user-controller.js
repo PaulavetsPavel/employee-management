@@ -1,14 +1,14 @@
 import userService from "../service/user-service.js";
 import { validationResult } from "express-validator";
-import ApiErrors from "../exeptions/api-error.js";
 
 class UserController {
-  async registration(req, res, next) {
+  async registration(req, res) {
     try {
       // валидация данных
       const errors = validationResult(req);
+
       if (!errors.isEmpty()) {
-        return next(ApiErrors.BadRequest("Validation error", errors.array()));
+        return res.status(500).json(errors.errors);
       }
       const { email, password } = req.body;
       const userData = await userService.registration(email, password);
@@ -18,11 +18,12 @@ class UserController {
       });
 
       return res.json(userData);
-    } catch (err) {
-      next(err);
+    } catch (e) {
+      return res.status(500).json(e.message);
     }
   }
-  async login(req, res, next) {
+
+  async login(req, res) {
     try {
       const { email, password } = req.body;
       const userData = await userService.login(email, password);
@@ -32,21 +33,22 @@ class UserController {
       });
 
       return res.json(userData);
-    } catch (err) {
-      next(err);
+    } catch (e) {
+      res.status(400).json(e.message);
     }
   }
-  async logout(req, res, next) {
+
+  async logout(req, res) {
     try {
       const { refreshToken } = req.cookies;
       const token = await userService.logout(refreshToken);
       res.clearCookie("refreshToken");
       return res.json(token);
-    } catch (err) {
-      next(err);
+    } catch (e) {
+      return res.status(500).json(e.messagee);
     }
   }
-  async refresh(req, res, next) {
+  async refresh(req, res) {
     try {
       const { refreshToken } = req.cookies;
       const userData = await userService.refresh(refreshToken);
@@ -56,16 +58,16 @@ class UserController {
       });
 
       return res.json(userData);
-    } catch (err) {
-      next(err);
+    } catch (e) {
+      return res.status(500).json(e.message);
     }
   }
-  async getUsers(req, res, next) {
+  async getUsers(req, res) {
     try {
       const userData = await userService.getAllUsers();
       return res.json(userData);
     } catch (err) {
-      next(err);
+      res.status(400).json(e.message);
     }
   }
 }

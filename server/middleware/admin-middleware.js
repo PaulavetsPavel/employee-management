@@ -1,14 +1,13 @@
-import ApiErrors from "../exeptions/api-error.js";
 
-import TokenService from "../service/token-service.js";
+
 export default function (req, res, next) {
   try {
     if (req.user.role !== "admin") {
-      return next(ApiErrors.NoAccessError());
+      return next(new Error(401, "User has no access"));
     } else {
       next();
     }
   } catch (err) {
-    return next(ApiErrors.NoAccessError());
+    return next(new Error(401, "User has no access"));
   }
 }
