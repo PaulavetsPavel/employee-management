@@ -1,14 +1,15 @@
-import { useContext } from 'react'
-import { useNavigate } from 'react-router'
-import { Context } from '../../index'
+import { useContext } from 'react';
+import { useNavigate } from 'react-router';
+import { Context } from '../../index';
+import styles from './Employees.module.css';
 
 const EmployeeItem = ({ employee, mutate }) => {
-	const { store } = useContext(Context)
+	const { store } = useContext(Context);
 
-	const navigate = useNavigate()
+	const navigate = useNavigate();
 
 	function deleteEmployee(id) {
-		mutate(employee.id)
+		mutate(employee.id);
 	}
 
 	return (
@@ -16,33 +17,34 @@ const EmployeeItem = ({ employee, mutate }) => {
 			<td>{employee.name}</td>
 			<td>{employee.position}</td>
 			<td>{employee.salary}</td>
-			<td>{employee.hire_date}</td>
+			<td>{employee.hire_date.slice(0, 10)}</td>
 			<td>
 				<img
 					src={!employee.photo_url ? '/notPhoto.png' : employee.photo_url}
-					alt=''
+					alt='User photo'
 				/>
 			</td>
 			{store.user.role === 'user' ? (
 				<td colSpan={2}>Только для администраторов</td>
 			) : (
 				<>
-					<td>
+					<td className={styles.edit__buttons}>
 						<button
 							onClick={() => {
-								navigate(`/employee/edit/${employee.id}`)
+								navigate(`/employee/edit/${employee.id}`);
 							}}
 						>
 							Редактировать
 						</button>
-					</td>
-					<td>
-						<button onClick={deleteEmployee}>Удалить</button>
+
+						<button onClick={deleteEmployee} className={styles.button__del}>
+							X
+						</button>
 					</td>
 				</>
 			)}
 		</>
-	)
-}
+	);
+};
 
-export default EmployeeItem
+export default EmployeeItem;

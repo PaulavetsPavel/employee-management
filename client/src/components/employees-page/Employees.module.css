@@ -1,18 +1,32 @@
-.table {
-	margin: 30px 10px;
-	width: 1000px;
+.header {
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	padding: 1.5rem 0.5rem;
+	border-bottom: 6px ridge #000;
+}
+.header__title {
+	color: #6e6e68;
+	margin-right: 2rem;
 }
 
-.table,
-.table th,
-.table td {
-	border: 1px solid black;
+.edit__buttons {
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	margin-top: 0.3rem;
+}
+.edit__buttons button {
+	display: inline-block;
+	padding: 10px 10px;
 }
 
-table td {
-	padding: 0 10px;
-}
-
-table button {
-	margin: 5px auto;
+.button__del {
+	background-color: #b80d0d;
+	margin-left: 1rem;
+	color: #fff;
+	font-size: 1rem;
+	font-weight: 900;
 }

@@ -1,32 +1,30 @@
-import { observer } from 'mobx-react-lite';
 import { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
 import { Context } from '../../index';
 import styles from './Form.module.css';
 
-const LoginForm = () => {
+const RegisterForm = () => {
 	const { register, reset, handleSubmit } = useForm({ mode: 'onChange' });
 	const { store } = useContext(Context);
 	const navigate = useNavigate();
 	const [errMessage, setErrMessage] = useState('');
 
 	const handleFormSubmit = async (data) => {
-		const response = await store.login({ data });
+		const response = await store.registration({ data });
+
 		if (response.status === 400) {
-			if (response.data.includes('password')) {
-				setErrMessage('Неверный пароль');
-			}
-			if (response.data.includes('email')) {
-				setErrMessage(
-					'Пользователь с таким Email на найден пожалуйста зарегистрируйтесь.'
-				);
-			}
+			setErrMessage(
+				'Пользователь с таким Email уже зарегистрирован пожалуйста войдите.'
+			);
 		}
 
 		if (response.status === 200) {
-			navigate('/employees');
-			reset();
+			setErrMessage('Регистрация прошла успешно.');
+			setTimeout(() => {
+				reset();
+				navigate('/login');
+			}, 500);
 		}
 	};
 
@@ -58,19 +56,20 @@ const LoginForm = () => {
 						(пароль должен содержать от 4 до 32 знаков)
 					</p>
 				</label>
+
 				<div className={styles.buttons__block}>
 					<button
 						onClick={() => {
-							navigate('/registration');
+							navigate('/login');
 						}}
 					>
-						Регистрация
+						Вход
 					</button>
-					<button>Вход</button>
+					<button>Зарегистрироваться</button>
 				</div>
 			</form>
 		</div>
 	);
 };
 
-export default observer(LoginForm);
+export default RegisterForm;
