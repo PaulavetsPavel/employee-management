@@ -30,3 +30,12 @@
 	font-size: 1rem;
 	font-weight: 900;
 }
+
+.pagination__container{
+	width: 95%;
+	margin-top: 3rem;
+	display: flex;
+	justify-content: end;
+	
+	
+}

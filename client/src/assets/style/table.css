@@ -44,4 +44,13 @@
 	align-items: center;
 	justify-content: space-between;
 	margin: 4rem 2rem 0;
+	
+}
+
+.pagination__buttons{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 11rem;
+	
 }

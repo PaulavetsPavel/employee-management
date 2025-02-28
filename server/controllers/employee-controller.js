@@ -4,7 +4,7 @@ import logAction from '../utils/logger.js';
 class EmployeeController {
 	async getEmployees(req, res) {
 		try {
-			const { page = 2, limit = 10, search, sortBy } = req.query;
+			const { page = 2, limit, search, sortBy } = req.query;
 			const offset = (page - 1) * limit;
 			let userData;
 
@@ -15,7 +15,8 @@ class EmployeeController {
 			} else {
 				userData = await employeeService.getAllEmployeesOnPage(offset, limit);
 			}
-			userData = await employeeService.getAllEmployees();
+			// userData = await employeeService.getAllEmployees();
+
 
 			return res.json(userData);
 		} catch (e) {

@@ -3,14 +3,10 @@ import { useNavigate } from 'react-router';
 import { Context } from '../../index';
 import styles from './Employees.module.css';
 
-const EmployeeItem = ({ employee, mutate }) => {
+const EmployeeItem = ({ employee, deleteEmployee }) => {
 	const { store } = useContext(Context);
 
 	const navigate = useNavigate();
-
-	function deleteEmployee(id) {
-		mutate(employee.id);
-	}
 
 	return (
 		<>
@@ -37,7 +33,10 @@ const EmployeeItem = ({ employee, mutate }) => {
 							Редактировать
 						</button>
 
-						<button onClick={deleteEmployee} className={styles.button__del}>
+						<button
+							onClick={() => deleteEmployee(employee.id)}
+							className={styles.button__del}
+						>
 							X
 						</button>
 					</td>

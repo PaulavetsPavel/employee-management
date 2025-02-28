@@ -1,8 +1,8 @@
 import $api from '../http';
 
 export default class EmployeeService {
-	static fetchEmployees() {
-		return $api.get('/employees');
+	static fetchEmployees(page,limit) {
+		return $api.get(`/employees?page=${page}&limit=${limit}`);
 	}
 	static fetchEmployee(id) {
 		return $api.get(`/employees/${id}`);

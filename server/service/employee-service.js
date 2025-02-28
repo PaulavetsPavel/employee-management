@@ -8,7 +8,7 @@ class EmployeeService {
 
 	async getAllEmployeesOnPage(offset, limit) {
 		const [employees] = await pool.query(
-			`SELECT * FROM employees LIMIT ${offset}, ${limit} `
+			`SELECT * FROM employees ORDER BY id LIMIT ${offset}, ${limit} `
 		)
 		return employees
 	}
